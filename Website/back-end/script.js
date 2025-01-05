@@ -3,10 +3,18 @@ import fs from 'fs';
 import { parse } from 'json2csv';
 
 const API_URL = 'https://records-ws.nbnatlas.org/occurrences/search';
-const SPECIES_LIST = ['Vulpes vulpes', 'Columba palumbus', 'Apis mellifera']; // 物种列表
+const SPECIES_LIST = ['Cygnus olor',
+                      'Anas platyrhynchos',
+                      'Lagopus muta',
+                      'Phasianus colchicus',
+                      'Ardea cinerea',
+                      'Falco peregrinus',
+                      'Passer domesticus',
+                      'Scolopax rusticola',
+                      'Milvus milvus']; // List of endangered animal species
 const LONDON_LATITUDE = 51.5074;
 const LONDON_LONGITUDE = -0.1278;
-const RADIUS_KM = 50; // 查询半径，单位：公里
+const RADIUS_KM = 50; 
 
 async function fetchSpeciesData(scientificName) {
   const url = `${API_URL}?q=taxon_name:"${encodeURIComponent(scientificName)}"&lat=${LONDON_LATITUDE}&lon=${LONDON_LONGITUDE}&radius=${RADIUS_KM}&pageSize=1000`;
@@ -20,7 +28,7 @@ async function fetchSpeciesData(scientificName) {
     throw new Error(`Failed to fetch data for ${scientificName}: ${response.statusText}`);
   }
   const data = await response.json();
-  console.log(`Full API response for ${scientificName}:`, JSON.stringify(data, null, 2)); // 输出完整响应
+  console.log(`Full API response for ${scientificName}:`, JSON.stringify(data, null, 2)); // Output complete response
   const records = data.occurrences || data.results || [];
   console.log(`Number of records for ${scientificName}: ${records.length}`);
   return records;

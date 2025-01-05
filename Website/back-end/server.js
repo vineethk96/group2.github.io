@@ -13,50 +13,48 @@
 //      npm install and npm start shortcuts and include a package.json file
 //          - See https://docs.npmjs.com/creating-a-package-json-file
 
+import express from 'express';
+import fs from 'fs';
+import csv from 'csv-parser';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
-const csv = require('csv-parser'); //csv-parser：npm install csv-parser
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 const app = express();
 const port = 3000;
 
-let data = [];
+const csvDirectory = path.join(__dirname, './csv_files');
 
-fs.createReadStream(path.join(__dirname, './GiGL_SpacesToVisit.csv'))
-  .pipe(csv())
-  .on('data', (row) => {
-    data.push(row);
-  })
-  .on('end', () => {
-    console.log('CSV file successfully processed');
-    //console.log('Data loaded:', data);
+// read files in floder
+const csvFiles = fs.readdirSync(csvDirectory).filter(file => file.endsWith('.csv'));
 
-  });
-
-
-
-app.get('/test', async (req, res) => {  // test the conncetion
-  try {
-    res.send('successful');
-  } catch (err) {
-    res.status(404).send('failed');
-  }
-});
-
-console.log('Data loaded:', data);
-
-
-app.get('/data', (req, res) => {  // read the greenspace data
-    if (data.length === 0) {
-        res.status(500).send('Data is not loaded yet.');
-      } else {
+// Create the corresponding API route for each CSV file
+csvFiles.forEach(file => {
+  const routePath = `/api/${path.basename(file, '.csv')}`;
+  app.get(routePath, (req, res) => {
+    const data = [];
+    fs.createReadStream(path.join(csvDirectory, file))
+      .pipe(csv())
+      .on('data', (row) => {
+        data.push(row);
+      })
+      .on('end', () => {
         res.json(data);
-      }
+      })
+      .on('error', (err) => {
+        res.status(500).send(`settle documents ${file} error: ${err.message}`);
+      });
+  });
 });
-
 
 app.listen(port, '0.0.0.0', () => {
-  console.log('Server is running');
+  console.log(`The server is running, listening for ports ${port}`);
+  console.log('Available API routes:');
+  csvFiles.forEach(file => {
+    const routePath = `/api/${path.basename(file, '.csv')}`;
+    console.log(`- ${routePath}`);
+  });
 });
