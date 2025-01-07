@@ -72,5 +72,40 @@ background-color:  #efce72;
     height:50%;
 }
 
+/* 容器样式 */
+.bird-item {
+    position: relative;
+    display: inline-block;
+}
+
+.bird-image {
+width: 300px; /* 图片宽度 */
+height: auto;
+}
+
+/* 按钮样式 */
+.favorite-btn {
+position: absolute;
+top: 10px; /* 调整爱心的位置 */
+right: 10px;
+background: none;
+border: none;
+cursor: pointer;
+padding: 0;
+}
+
+/* 默认爱心样式 */
+.heart-icon {
+fill: none; /* 空心 */
+stroke: gray; /* 默认灰色边框 */
+transition: fill 0.3s ease, stroke 0.3s ease;
+}
+
+/* 激活状态爱心样式 */
+.favorite-btn.active .heart-icon {
+fill: red; /* 填充红色 */
+stroke: red; /* 边框红色 */
+}
+  
   
   
