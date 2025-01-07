@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-//  SERVER TITLE
-//  Author:  AUTHORS NAMES
+//  SERVER
+//  Author:  Xinming Feng, Vineeth Kirandumkara
 //  Description:  WHAT DOES THIS PACKAGE DO
 //  Version: 0.0.1
 //
@@ -17,14 +17,22 @@ import express from 'express';
 import fs from 'fs';
 import csv from 'csv-parser';
 import path from 'path';
+import dotenv from 'dotenv';
+import cors from 'cors';
+
 import { fileURLToPath } from 'url';
+
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-
 const app = express();
 const port = 3000;
+
+// Enable cors for all origins.
+  // Look into removing this when backend is pushed to PiCloud
+app.use(cors());
 
 const csvDirectory = path.join(__dirname, './csv_files');
 
@@ -48,6 +56,10 @@ csvFiles.forEach(file => {
         res.status(500).send(`settle documents ${file} error: ${err.message}`);
       });
   });
+});
+
+app.get('/api/key', (req, res)=>{
+  res.json({apiKey: process.env.GMAP_API_KEY_S});
 });
 
 app.listen(port, '0.0.0.0', () => {

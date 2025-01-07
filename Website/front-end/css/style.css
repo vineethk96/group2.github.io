@@ -1,1 +1,22 @@
- /* This is your main style file */
+
+#fullScreen{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    background-color: bisque;
+}
+
+#mapCanvas{
+    flex: 1;
+    height: 100%;
+    /* width: 75%; */
+    background-color: aqua;
+}
+
+#infoPanel{
+    height: 100%;
+    width: 25%;
+    background-color: black;
+}
