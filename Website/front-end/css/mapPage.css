@@ -25,3 +25,25 @@
 #searchForm{
     padding-top: 60px;
 }
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td{
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+
+tr:hover{
+    background-color: #ddd;
+}
+
+tr.selected{
+    background-color: #f0f0f0;
+}

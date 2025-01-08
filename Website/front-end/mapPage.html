@@ -66,10 +66,26 @@
         <section id="mapArea" class="workspace">
             <div id='fullScreen'>
                 <div id='infoPanel'>
+                    <!-- Search Bar -->
                     <form id="searchForm">
                         <input type="text" id="searchInput" placeholder="Enter your search query" required>
                         <button type="submit">Search</button>
                     </form>
+
+                    <!-- Dynamically Loading Table -->
+                    <table id="dataTable">
+                        <thread>
+                            <tr>
+                                <th>ID</th>
+                                <th>SciName</th>
+                                <th>CommName</th>
+                            </tr>
+                        </thread>
+
+                        <tbody>
+                            <!-- Rows are Populated here -->
+                        </tbody>
+                    </table>
                 </div>
                 <div id='mapCanvas'></div>
             </div>

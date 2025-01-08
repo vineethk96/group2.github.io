@@ -35,13 +35,34 @@ document.addEventListener('DOMContentLoaded', async () => {
                 .then(response => response.json())
                 .then(data => {
                     console.log('Get Response: ', data);
-                    // Some Response Handling
+                    populateTable(data);
                 })
                 .catch(error => {
                     console.error('Error: ', error);
                 });
         }
     });
+
+    function populateTable(data){
+        const tableBody = document.querySelector('#dataTable tbody');
+
+        data.forEach((item, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.guid}</td>
+                <td>${item.scientificNameMatches[0]}</td>
+                <td>${item.commonName}</td>
+            `;
+            row.addEventListener('click', () => selectRow(index));
+            tableBody.appendChild(row);
+        });
+    }
+
+    function selectRow(index){
+        const rows = document.querySelectorAll('#dataTable tbody tr');
+        rows.forEach(row => row.classList.remove('selected'));
+        rows[index].classList.add('selected');
+    }
 });
 
 function initMap(){
