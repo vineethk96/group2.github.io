@@ -65,7 +65,12 @@
         <!-- Info and Map Area -->
         <section id="mapArea" class="workspace">
             <div id='fullScreen'>
-                <div id='infoPanel'></div>
+                <div id='infoPanel'>
+                    <form id="searchForm">
+                        <input type="text" id="searchInput" placeholder="Enter your search query" required>
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
                 <div id='mapCanvas'></div>
             </div>
         </section>

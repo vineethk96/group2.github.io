@@ -9,14 +9,39 @@ var map;
 var mapWindow;
 
 document.addEventListener('DOMContentLoaded', async () => {
+
+    // Connect to the API to get the GMaps API Key
     const response = await fetch('http://localhost:3000/api/key');
     const data = await response.json();
     const apiKey = data.apiKey;
-  
     const script = document.createElement('script');
     script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`;
     script.async = true;
     document.body.appendChild(script);
+
+    // Attach the event listener to the search and submit button
+    const form = document.getElementById('searchForm');
+    const input = document.getElementById('searchInput');
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault(); // Prevents default form submission. (COME BACK TO)
+
+        const query = input.value;
+        if(query){
+            const url = `https://species-ws.nbnatlas.org/search/auto?q=${query}&limit=5&geoOnly=true`;
+
+            // GET Request
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Get Response: ', data);
+                    // Some Response Handling
+                })
+                .catch(error => {
+                    console.error('Error: ', error);
+                });
+        }
+    });
 });
 
 function initMap(){
