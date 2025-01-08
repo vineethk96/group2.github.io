@@ -15,8 +15,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   
     const script = document.createElement('script');
     script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`;
-    console.log("GMaps Endpoint");
-    console.log(script.src);
     script.async = true;
     document.body.appendChild(script);
 });

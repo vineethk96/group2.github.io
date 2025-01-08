@@ -58,6 +58,10 @@ csvFiles.forEach(file => {
   });
 });
 
+/**
+ * Description: Access the API Key
+ * TODO: Swap out Steven's API key for my own
+ */
 app.get('/api/key', (req, res)=>{
   res.json({apiKey: process.env.GMAP_API_KEY_S});
 });
