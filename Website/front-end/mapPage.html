@@ -67,22 +67,24 @@
             <div id='fullScreen'>
                 <div id='infoPanel'>
                     <!-- Search Bar -->
-                    <form id="searchForm">
-                        <input type="text" id="searchInput" placeholder="Enter your search query" required>
-                        <button type="submit">Search</button>
-                    </form>
+                    <div id='searchBar'>
+                        <form id="searchForm">
+                            <input type="text" id="searchInput" placeholder="Enter your search query" required>
+                            <button type="submit" id="searchButton">Search</button>
+                        </form>
+                    </div>
 
                     <!-- Dynamically Loading Table -->
                     <table id="dataTable">
                         <thread>
                             <tr>
-                                <th>ID</th>
-                                <th>SciName</th>
-                                <th>CommName</th>
+                                <th>Common Name</th>
+                                <th>Scientific Name</th>
+                                <th>GUID</th>
                             </tr>
                         </thread>
 
-                        <tbody>
+                        <tbody id="tableBody">
                             <!-- Rows are Populated here -->
                         </tbody>
                     </table>

@@ -16,14 +16,31 @@
 
 #infoPanel{
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    /* justify-content: center; */
     height: 100%;
     width: 25%;
     background-color: rgba(0, 0, 0, 0.267);
 }
 
-#searchForm{
-    padding-top: 60px;
+/* #searchForm{
+    
+} */
+
+#searchBar{
+    padding-top: 20px;
+    justify-content: center;
+}
+
+#searchButton{
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background-color: bisque;
+}
+
+#searchInput{
+    border-radius: 10px;
+    border: 1px solid #ccc;
 }
 
 table{

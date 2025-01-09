@@ -11,10 +11,12 @@ var mapWindow;
 document.addEventListener('DOMContentLoaded', async () => {
 
     // Connect to the API to get the GMaps API Key
-    const response = await fetch('http://localhost:3000/api/key');
-    const data = await response.json();
-    const apiKey = data.apiKey;
+    const keyResponse = await fetch('http://localhost:3000/api/key');
+    const keyData = await keyResponse.json();
+    const apiKey = keyData.apiKey;
     const script = document.createElement('script');
+
+    // Pull the Map from the API
     script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`;
     script.async = true;
     document.body.appendChild(script);
@@ -23,35 +25,48 @@ document.addEventListener('DOMContentLoaded', async () => {
     const form = document.getElementById('searchForm');
     const input = document.getElementById('searchInput');
 
-    form.addEventListener('submit', (event) => {
+    // Wait for User to Submit a Search
+    form.addEventListener('submit', async (event) => {
         event.preventDefault(); // Prevents default form submission. (COME BACK TO)
-
         const query = input.value;
+
         if(query){
+
             const url = `https://species-ws.nbnatlas.org/search/auto?q=${query}&limit=5&geoOnly=true`;
 
-            // GET Request
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Get Response: ', data);
-                    populateTable(data);
-                })
-                .catch(error => {
-                    console.error('Error: ', error);
-                });
+            try{
+                // Get the data from the NBN Atlas API
+                const searchResponse = await fetch(url);
+                const searchData = await searchResponse.json();
+
+                // Check if the autoComplete response is an array
+                if(searchData.autoCompleteList && Array.isArray(searchData.autoCompleteList)){
+                    console.log(searchData);
+                    populateTable(searchData.autoCompleteList);
+                }
+                else{
+                    console.error('Error: Incomplete Array', searchData);
+                }
+            }catch(error){
+                console.error('Error: Invalid Return Data', error);
+            }
         }
     });
 
     function populateTable(data){
-        const tableBody = document.querySelector('#dataTable tbody');
+        const dataTable = document.querySelector('#dataTable tbody');
+        const tableBody = document.getElementById('tableBody');
 
+        // Clear the previous data
+        tableBody.innerHTML = '';
+
+        // Update the table data
         data.forEach((item, index) => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${item.guid}</td>
-                <td>${item.scientificNameMatches[0]}</td>
                 <td>${item.commonName}</td>
+                <td>${item.name}</td>
+                <td>${item.guid}</td>
             `;
             row.addEventListener('click', () => selectRow(index));
             tableBody.appendChild(row);
