@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if(query){
 
-            const url = `https://species-ws.nbnatlas.org/search/auto?q=${query}&limit=5&geoOnly=true`;
+            const url = `https://species-ws.nbnatlas.org/search?q=&fq=commonName:${query}'`
 
             try{
                 // Get the data from the NBN Atlas API
@@ -40,9 +40,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const searchData = await searchResponse.json();
 
                 // Check if the autoComplete response is an array
-                if(searchData.autoCompleteList && Array.isArray(searchData.autoCompleteList)){
+                if(searchData.searchResults.results && Array.isArray(searchData.searchResults.results)){
                     console.log(searchData);
-                    populateTable(searchData.autoCompleteList);
+                    populateTable(searchData.searchResults.results);
                 }
                 else{
                     console.error('Error: Incomplete Array', searchData);
@@ -64,10 +64,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         data.forEach((item, index) => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${item.commonName}</td>
-                <td>${item.name}</td>
-                <td>${item.guid}</td>
+                <td>${item.commonNameSingle}</td>
+                <td>${item.scientificName}</td>
             `;
+            console.log(item.guid);
             row.addEventListener('click', () => selectRow(index));
             tableBody.appendChild(row);
         });
@@ -75,6 +75,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function selectRow(index){
         const rows = document.querySelectorAll('#dataTable tbody tr');
+        rows.
+        console.log(index);
+        console.log(" => ");
+        console.log(rows);
         rows.forEach(row => row.classList.remove('selected'));
         rows[index].classList.add('selected');
     }
