@@ -7,6 +7,7 @@
 
 var map;
 var mapWindow;
+let markers = [];
 
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -94,19 +95,37 @@ document.addEventListener('DOMContentLoaded', async () => {
         try{
             const res = await fetch(url);
             const data = await res.json();
-            console.log('data: ', data.occurrences);
+            //console.log('data: ', data.occurrences);
 
+            // Clear all the Markers
+            deleteMarkers();
+
+            // Add the new Markers
             data.occurrences.forEach(sighting => {
-                console.log("sciName: %s | latLong: %f", sciName, sighting.latLong);
-                new google.maps.Marker({
-                    position: {lat: sighting.decimalLatitude, lng: sighting.decimalLongitude},
-                    map: map
-                });
+                //console.log("sciName: %s | latLong: %f", sciName, sighting.latLong);
+                addMarker({lat: sighting.decimalLatitude, lng: sighting.decimalLongitude});
             });
 
         }catch(error){
             console.error('Error: Could not get LatLong Data', error);
         }
+    }
+
+    // Function to add a marker
+    function addMarker(location) {
+        const marker = new google.maps.Marker({
+            position: location,
+            map: map, // The map instance
+        });
+        markers.push(marker); // Store the marker in the array
+    }
+
+    // Function to delete all markers
+    function deleteMarkers() {
+        for (let i = 0; i < markers.length; i++) {
+            markers[i].setMap(null); // Remove the marker from the map
+        }
+        markers = []; // Clear the markers array
     }
 });
 
