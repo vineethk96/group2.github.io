@@ -67,20 +67,42 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <td>${item.commonNameSingle}</td>
                 <td>${item.scientificName}</td>
             `;
-            console.log(item.guid);
-            row.addEventListener('click', () => selectRow(index));
+            row.addEventListener('click', () => selectRow(item.scientificName));
             tableBody.appendChild(row);
         });
     }
 
-    function selectRow(index){
-        const rows = document.querySelectorAll('#dataTable tbody tr');
-        rows.
-        console.log(index);
-        console.log(" => ");
-        console.log(rows);
+    function selectRow(sciName){
+        const rows = document.querySelectorAll('#dataTable tbody  tr');
+        
+        // Deselects all rows
         rows.forEach(row => row.classList.remove('selected'));
-        rows[index].classList.add('selected');
+
+        // Find the user selected row to "select"
+        const selectedRow = Array.from(rows).find(row => row.cells[1].textContent === sciName);
+        if(selectedRow){
+            selectedRow.classList.add('selected');
+        }
+
+        // Get the long and lat values via the scientific name
+        getLatLongs(sciName);
+    }
+
+    async function getLatLongs(sciName){
+        const url = `https://records-ws.nbnatlas.org/occurrences/search?q=*:*&fq=taxon_name:${sciName}`;
+
+        try{
+            const res = await fetch(url);
+            const data = await res.json();
+            console.log('data: ', data.occurrences);
+
+            data.occurrences.forEach(sighting => {
+                console.log("sciName: %s | latLong: %f", sciName, sighting.latLong);
+            });
+
+        }catch(error){
+            console.error('Error: Could not get LatLong Data', error);
+        }
     }
 });
 
