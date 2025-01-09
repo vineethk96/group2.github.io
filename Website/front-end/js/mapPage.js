@@ -98,6 +98,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             data.occurrences.forEach(sighting => {
                 console.log("sciName: %s | latLong: %f", sciName, sighting.latLong);
+                new google.maps.Marker({
+                    position: {lat: sighting.decimalLatitude, lng: sighting.decimalLongitude},
+                    map: map
+                });
             });
 
         }catch(error){
