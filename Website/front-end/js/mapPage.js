@@ -81,16 +81,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function initMap(){
+    // Create the GMaps Window
     mapWindow = new google.maps.InfoWindow({maxWidth: 300});
 
+    // Sets the Map Defaults
     var mapOptions = {
         center: new google.maps.LatLng(51.514756, -0.104345),
         zoom: 14,
         styles: themedMap
     };
 
+    // Open the GMap
     map = new google.maps.Map(document.getElementById("mapCanvas"), mapOptions);
 
+    // Allow for the user to click and drag the map around
     google.maps.event.addListener(map, 'dragend', function() {
         var bounds = map.getBounds();
         console.log("SW: " + bounds.getSouthWest() + " NE: " + bounds.getNorthEast());
