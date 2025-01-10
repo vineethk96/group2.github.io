@@ -8,6 +8,10 @@
 var map;
 var mapWindow;
 let markers = [];
+const BIRD_CLASS = 'Aves';
+const LONDON_LAT = 51.5074;
+const LONDON_LONG = -0.1278;
+const RADIUS_KM = 50;
 
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -90,7 +94,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     async function getLatLongs(sciName){
-        const url = `https://records-ws.nbnatlas.org/occurrences/search?q=*:*&fq=taxon_name:${sciName}`;
+        const url = `https://records-ws.nbnatlas.org/occurrences/search?q=class:${BIRD_CLASS}&lat=${LONDON_LAT}&lon=${LONDON_LONG}&radius=${RADIUS_KM}&fq=taxon_name:${sciName}`;
 
         try{
             const res = await fetch(url);
@@ -148,6 +152,5 @@ function initMap(){
         var bounds = map.getBounds();
         console.log("SW: " + bounds.getSouthWest() + " NE: " + bounds.getNorthEast());
         console.log("Center: " + map.getCenter().lat() + ", " +  map.getCenter().lng());
-        getData(map.getCenter().lat(), map.getCenter().lng());
     });
 }
