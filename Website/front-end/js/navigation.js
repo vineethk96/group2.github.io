@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const birdtypeImage = document.getElementById('birdtype-image'); 
   console.log(birdtypeImage.src);
 
-  // 示例分类数据
+  // Example classification data
   const categoryData = {
     Anseriformes: {
       description: 'Anseriformes are a class of waterfowl represented by ducks, geese, and swans, which are widely distributed in wetlands, lakes, rivers and other water environments around the world. They usually have streamlined bodies, webbed toes, suitable for swimming, flat beaks with filter feeding structures, and mainly feed on plants, aquatic insects and small organisms.',
@@ -37,36 +37,36 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   };
 
-  // 点击导航栏时，激活状态切换
+  // Click to toggle activation status
   sidebarItems.forEach(item => {
     item.addEventListener("click", function () {
-      // 移除所有导航项的激活状态
+      // Remove all activations
       sidebarItems.forEach(item => item.classList.remove("active-item"));
       
-      // 为当前点击的导航项添加激活状态
+      // Add activation state
       this.classList.add("active-item");
     });
   });
 
   navItems.forEach(item => {
     item.addEventListener("click", function () {
-      const category = this.dataset.category; // 从 .nav-item 的 data-category 获取值
+      const category = this.dataset.category; // Get the value from the data-category of .nav-item
       const data = categoryData[category];
 
-      // 移除所有导航项的激活状态
+      
       navItems.forEach(navItem => navItem.classList.remove("active-item"));
       
-      // 为当前点击的导航项添加激活状态
+      
       this.classList.add("active-item");
 
       if (data) {
-        // 更新分类信息
+        // Update Classification Information
         categoryTitle.textContent = category;
         categoryDescription.textContent = data.description;
         birdtypeImage.src = data.birdtypeImage;
 
-        // 渲染鸟类信息
-        birdGrid.innerHTML = '';  // 清空当前的鸟类信息
+        // Rendering bird information
+        birdGrid.innerHTML = '';  // Clear current bird information
         data.birds.forEach(bird => {
           const birdCard = document.createElement('div');
           birdCard.classList.add('bird-card');

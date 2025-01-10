@@ -1,4 +1,4 @@
-// 数据存储
+// Data storage
 const birdDetails = [
   {
     id: "bird1",
@@ -201,12 +201,12 @@ const birdDetails = [
   },
 ];
 
-// 根据鸟类 ID 动态加载数据
+// Dynamically load data based on bird ID
 function loadBirdDetails(birdId) {
   const bird = birdDetails.find((b) => b.id === birdId);
 
   if (bird) {
-    // 更新页面内容
+    // Update page content
     document.querySelector(".bird-image").src = bird.image;
     document.querySelector(".bird-name").textContent = bird.name;
     document.querySelector(".bird-description").textContent = bird.description;
@@ -226,7 +226,7 @@ function loadBirdDetails(birdId) {
   }
 }
 
-// 页面加载时初始化
+// Initialized when the page loads
 document.addEventListener("DOMContentLoaded", () => {
   const urlParams = new URLSearchParams(window.location.search);
   const birdId = urlParams.get("birdId");
@@ -239,32 +239,32 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
   const favoriteButton = document.querySelector(".favorite-btn");
 
-  // 检查收藏状态（从 localStorage 中读取）
+  // Check favorites status (read from localStorage)
   const birdId = new URLSearchParams(window.location.search).get("birdId");
   const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
 
   if (favorites.includes(birdId)) {
-    favoriteButton.classList.add("active"); // 设置为已收藏状态
+    favoriteButton.classList.add("active"); // Set as favorite
   }
 
-  // 点击事件
+  // Click Event
   favoriteButton.addEventListener("click", () => {
     const isFavorited = favoriteButton.classList.toggle("active");
 
     if (isFavorited) {
-      // 添加到收藏列表
+      // Add to Wishlist
       if (!favorites.includes(birdId)) {
         favorites.push(birdId);
       }
     } else {
-      // 从收藏列表中移除
+      // remove
       const index = favorites.indexOf(birdId);
       if (index !== -1) {
         favorites.splice(index, 1);
       }
     }
 
-    // 更新到 localStorage
+    // Update to localStorage
     localStorage.setItem("favorites", JSON.stringify(favorites));
   });
 });
