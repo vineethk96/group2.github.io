@@ -1,3 +1,11 @@
+#title {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    z-index: 1100; /* Make sure it is above the sidebar */
+}
+
 .background-img {
     background: linear-gradient(300deg, #b700ff, #ff7f4c, #edef72);
     background-size: 180% 180%;
@@ -9,100 +17,175 @@
     font-weight: bold;
 }
 
-.main-layout{
-    display:flex;
-    height: 100vh;
-}
-
-/* 设置 side-nav 的容器宽度和高度 */
 #side {
-    height: 100vh; /* 占据全屏高度 */ 
-}
-  
-/* 使每个 nav-item 均分高度 */
-#side .nav-item {
-height: calc(100vh / 3); /* 将高度分为三等份 */
-display: flex;
-justify-content: center; /* 居中显示内容 */
-align-items: center;
-width: 4.8rem;
-background-color: #efce72;
-}
-
-/* 旋转文本，保持逆时针旋转 */
-#side .nav-link {
-transform: rotate(-90deg); /* 逆时针旋转90度 */
-transform-origin: center center; /* 设置旋转基点为左上角 */
-white-space: nowrap; /* 防止文字换行 */
-font-size: 24px; /* 字体大小 */
-width: auto; /* 根据内容调整宽度 */
-height: auto; /* 根据内容调整高度 */
-background-color:  #efce72;
-}
-
-#main{
-    flex:1;
-}
-
-.main-content{
-    display:grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 2fr 1fr;
-    gap:1rem;
-}
-
-.item{
-    background-color: yellow;
-    position: relative;
-    width: 100%; /* 或者固定的百分比或像素宽度 */
-    height: 100%; /* 或者固定的百分比或像素高度 */
-    display: flex; /* 用于对子元素布局 */
-    justify-content: center; /* 水平居中 */
-    align-items: center; /* 垂直居中 */
-    overflow: hidden; /* 避免内容溢出 */
-}
-
-.item.picture{
-    grid-area:1 / 1 / 2 / 4;
-    position: relative; /* 定位以便控制内部内容 */
-    width: 100%; /* 或其他需要的固定宽度 */
-    height: 100%; /* 或其他需要的固定高度 */
+    position: fixed; 
+    top: 4rem;          
+    left: 0;        
+    height: calc(100vh - 4rem); 
     display: flex;
-    justify-content: center; /* 子项水平居中 */
-    align-items: center; /* 子项垂直居中 */
-    overflow: hidden; /* 避免内容超出容器 */
+    flex-direction: column; 
+    justify-content: space-between; 
+    background-color: #72b7ef;
+    width:4.8rem;
+    z-index: 1000; 
 }
 
-.item.picture img {
-    position: absolute;
+#side .nav-item {
+    height: calc((100vh - 4rem) / 3); /* Divide the height into thirds */
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    width: 4.8rem;
+    min-height: 12rem;
+    background-color: #efce72;
+    transition: background-color 0.3s ease; /* Smooth background changes */
+}
+
+#side .nav-link {
+    transform: rotate(-90deg); /* Rotate 90 degrees counterclockwise */
+    transform-origin: center center; /* Set the rotation base point */
+    white-space: nowrap; 
+    font-size: 24px; 
+    width: auto; 
+    height: auto; 
+    color:black;
+}
+
+#side .nav-item.active-item {
+    background-color: #ffc107; 
+    font-weight: bold;
+}
+
+.side-nav {
+    width: 200px;
+    background-color: #f8f9fa;
+    border-right: 1px solid #ddd;
+}
+    
+.main-layout {
+    display: flex;
+    margin-top: 4rem;
+}
+
+.main-content {
+margin-left: 4.8rem; 
+margin-top: 0.8rem; 
+flex-grow: 1;
+height: calc(100vh - 4.8rem);
+}
+
+.category-info {
+    position: relative; 
+    width: 100%;
+    height: 100%; 
+    overflow: hidden; /* Prevent image overflow */
+}
+
+.category-info img {
+    position: absolute; 
     top: 0;
     left: 0;
-    width: 100%; /* 图片宽度与容器一致 */
-    height: 100%; /* 图片高度与容器一致 */
-    object-fit: cover; /* 确保图片按照容器比例裁剪显示 */
-    object-position: center; /* 图片居中显示 */
+    border-radius: 15px;
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; /* Make sure the image fills the space proportionally */
+    object-position: center ; 
+    z-index: -1; /* Place image behind text */
 }
 
-.card {
-    width: 100%; /* 卡片宽度适配父容器 */
-    height: 100%; /* 卡片高度适配父容器 */
-    justify-content: space-between;
-  }
-  
-  /* 图片适配卡片 */
-  .card-img-top {
-    width: 100%; /* 图片宽度与卡片一致 */
-    height: 75%; /* 按比例显示图片 */
-    object-fit: cover; /* 如果需要填充容器，可以用 cover */
-  }
-  
-  /* 卡片主体部分适配*/
-  .card-body {
-    flex-grow: 1; /* 主体部分占据剩余空间 */
+.category-info {
+    position: relative;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end; 
-  } 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100%; 
+    width: 100%; 
+}
+
+.category-info h2 {
+    font-size: 50px;
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 1);
+    text-align: center;
+    padding-bottom: 0.5rem; 
+    z-index: 1;
+}
+
+.category-info p {
+    font-size: 24px;
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 1);
+    text-align: center;
+    z-index: 1;
+}
+
+.bird-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top:20px;
+    gap: 20px;
+}
+
+.bird-card {
+    max-height: calc(100vh/4*3);
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column; 
+    margin:5px;
+}
+
+.bird-card img {
+    width: 100%;
+    height: 75%;
+    object-fit: cover; 
+    border-bottom: 1px solid #ddd; /* Dividing Line */
+}
+
+.bird-card .content {
+    height: 25%; 
+    display: flex;
+    flex-direction: column; /* Content is arranged vertically */
+    justify-content: center; 
+    align-items: center;
+    padding: 10px;
+}
+
+.bird-card h5 {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin: 5px 0;
+}
+
+.bird-card a {
+    text-align: center;
+    padding: 5px 10px;
+    margin: 5px 0;
+    border-radius: 10px; 
+    border: 2px solid #ffc107;
+    color: #ffc107;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
   
+  .bird-card a:hover {
+    background-color: #ffc107;
+    color: #fff;
+  }
   
+@media (max-width: 1024px) {
+    .bird-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 cards per row on medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .bird-grid {
+        grid-template-columns: 1fr; /* On small screens, 1 card per row */
+    }
+}
   

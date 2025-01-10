@@ -1,3 +1,11 @@
+#title {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    z-index: 1100; /* Make sure it is above the sidebar */
+}
+
 .background-img {
     background: linear-gradient(300deg, #b700ff, #ff7f4c, #edef72);
     background-size: 180% 180%;
@@ -9,103 +17,146 @@
     font-weight: bold;
 }
 
-.main-layout{
-    display:flex;
-    height: 100vh;
-}
-
-/* 设置 side-nav 的容器宽度和高度 */
 #side {
-    height: 100vh; /* 占据全屏高度 */ 
+    position: fixed; 
+    top: 4rem;          
+    left: 0;        
+    height: calc(100vh - 4rem); 
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between; 
+    background-color: #72b7ef;
+    width:4.8rem;
+    z-index: 1000; 
 }
-  
-/* 使每个 nav-item 均分高度 */
+
 #side .nav-item {
-height: calc(100vh / 3); /* 将高度分为三等份 */
-display: flex;
-justify-content: center; /* 居中显示内容 */
-align-items: center;
-width: 4.8rem;
-background-color: #efce72;
+    height: calc((100vh - 4rem) / 3); /* Divide the height into thirds */
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    width: 4.8rem;
+    min-height: 12rem;
+    background-color: #efce72;
+    transition: background-color 0.3s ease; /* Smooth background changes */
 }
 
-/* 旋转文本，保持逆时针旋转 */
+#side .nav-item.active-item {
+    background-color: #ffc107; 
+}
+
 #side .nav-link {
-transform: rotate(-90deg); /* 逆时针旋转90度 */
-transform-origin: center center; /* 设置旋转基点为左上角 */
-white-space: nowrap; /* 防止文字换行 */
-font-size: 24px; /* 字体大小 */
-width: auto; /* 根据内容调整宽度 */
-height: auto; /* 根据内容调整高度 */
-background-color:  #efce72;
+    transform: rotate(-90deg); /* Rotate 90 degrees counterclockwise */
+    transform-origin: center center; /* Set the rotation base point */
+    white-space: nowrap; 
+    font-size: 24px; 
+    width: auto; 
+    height: auto; 
+    color:black;
 }
 
-#main{
-    flex:1;
-    justify-content: center; /* 水平居中 */
-    align-items: center; /* 垂直居中 */
+.side-nav {
+    width: 200px;
+    background-color: #f8f9fa;
+    border-right: 1px solid #ddd;
 }
-
-.main-content{
-    display:grid;
-    grid-template-columns: 1.5fr 2fr; 
-    gap:1rem;
     
+.main-layout {
+    display: flex;
+    margin-top: 3rem;   
 }
 
-.item{
-    background-color: yellow;
-    position: relative;
-    width: 100%; /* 或者固定的百分比或像素宽度 */
-    height: 100%; /* 或者固定的百分比或像素高度 */
-    display: flex; /* 用于对子元素布局 */
-    justify-content: center; /* 水平居中 */
-    align-items: center; /* 垂直居中 */
-    overflow: hidden; /* 避免内容溢出 */
+.card {
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column; 
+    margin-left: 3rem;
+    height: auto; /* 确保卡片的高度自适应 */
+    width: 100%; /* 宽度适应父容器 */
 }
 
-.text-content{
-    display:grid;
-    grid-template-columns: 1fr 4fr;
-    grid-template-rows: 1.5fr 1fr 1fr 1fr 1fr;
-    width:90%;
-    height:50%;
+.card .bird-image {
+    object-fit: cover;       /* 保持图片的宽高比 */
+    width: 100%;             /* 图片宽度自适应 */
+    max-height: 75%;             /* 图片高度占卡片的 75% */
+    object-position: center top;  /* 图片从顶部开始对齐 */
 }
 
-/* 容器样式 */
-.bird-item {
-    position: relative;
-    display: inline-block;
+.card-body {
+    flex-grow: 1; /* 保证卡片内容区占满剩余空间 */
+    padding: 1rem;
 }
 
-.bird-image {
-width: 300px; /* 图片宽度 */
-height: auto;
+.card-body a {
+    text-align: center;
+    padding: 5px 10px;
+    margin: 5px 0;
+    border-radius: 10px; 
+    border: 2px solid #ffc107;
+    color: #ffc107;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+.logo{
+    background-color: #ffc107;
+    width: 50px; 
+    border-radius: 8px;
 }
 
-/* 按钮样式 */
-.favorite-btn {
-position: absolute;
-top: 10px; /* 调整爱心的位置 */
-right: 10px;
-background: none;
-border: none;
-cursor: pointer;
-padding: 0;
-}
-
-/* 默认爱心样式 */
-.heart-icon {
-fill: none; /* 空心 */
-stroke: gray; /* 默认灰色边框 */
-transition: fill 0.3s ease, stroke 0.3s ease;
-}
-
-/* 激活状态爱心样式 */
-.favorite-btn.active .heart-icon {
-fill: red; /* 填充红色 */
-stroke: red; /* 边框红色 */
-}
+ /* 按钮样式 */
+ .favorite-btn {
+    position: absolute;
+    right: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  /* 默认爱心样式 */
+  .heart-icon {
+    fill: none; /* 空心 */
+    stroke: gray; /* 默认灰色边框 */
+    transition: fill 0.3s ease, stroke 0.3s ease;
+  }
+  
+  /* 激活状态爱心样式 */
+  .favorite-btn.active .heart-icon {
+    fill: red; /* 填充红色 */
+    stroke: red; /* 边框红色 */
+  }
   
   
+  /* 在大屏幕时，确保图片高度正确显示 */
+@media (min-width: 1024px) {
+    .col-md-5 {
+        flex: 0 0 40%;           /* 图片列占40%的宽度 */
+        max-width: 40%;
+        height: auto; /* 在大屏幕时，保持高度自动 */
+    }
+
+    .col-md-7 {
+        flex: 0 0 60%;           /* 另一列占60%的宽度 */
+        max-width: 60%;
+    }
+}
+
+/* 在小屏幕时，图片和信息模块上下排布 */
+@media (max-width: 1023px) {
+    .col {
+        flex: 0 0 100%;          /* 在小屏幕时，每列占满100%的宽度 */
+        max-width: 100%;
+    }
+
+    .col-md-5 {
+        flex: 0 0 100%;           /* 图片列占满100%的宽度 */
+        max-width: 100%;
+        height: 70%; /* 确保图片高度占 70% */
+    }
+
+}
   

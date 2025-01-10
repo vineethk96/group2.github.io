@@ -11,10 +11,10 @@
 </head>
 
 <body>
-    <section id="title" class="background-img">
+  <section id="title" class="background-img">
     <nav class="navbar navbar-expand-lg bg-body-tertiary background-img">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#"><img src="./images/house-door.svg" alt="brand icon" height="50px"></a>
+          <a class="navbar-brand" href="./index.html"><img src="./images/house-door.svg" alt="brand icon" height="50px"></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -22,28 +22,28 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-5">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="./homepage.html">HOME</a>
+                <a class="nav-link" aria-current="page" href="./index.html">HOME</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="./details.html">NAVIGATION</a>
-              </li>
-              
+
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  MAP
+                <a class="nav-link dropdown-toggle active" href="./navigation.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  NAVIGATION
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Overview</a></li>
-                  <li><a class="dropdown-item" href="#">Explore</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  <li><a class="dropdown-item" href="./navigation.html">Navigation</a></li>
+                  <li><a class="dropdown-item" href="./details.html">Details</a></li>
                 </ul>
               </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="./mapPage.html">MAP</a>
+              </li>
+              
               <li class="nav-item">
                 <a class="nav-link" href="./favorite.html">FAVORITE</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">ABOUT</a>
+                <a class="nav-link" href="./about us page.html">ABOUT</a>
               </li>
             </ul>
 
@@ -57,18 +57,18 @@
     <section id="side" class="side-nav">
     <div class="d-flex flex-column flex-shrink-0 bg-body-tertiary" style="width: 4.8rem; height: 100vh;">
         <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-          <li class="nav-item border-bottom">
-            <a href="#" class="nav-link active border-bottom">
+          <li class="nav-item border-bottom" data-category="Anseriformes">
+            <a href="./navigation.html?category=Anseriformes" class="nav-link category-link">
                 Anseriformes
             </a>
           </li>
-          <li class="nav-item border-bottom">
-            <a href="#" class="nav-link active border-bottom">
+          <li class="nav-item border-bottom" data-category="Accipitriformes">
+            <a href="./navigation.html?category=Accipitriformes" class="nav-link category-link">
                 Accipitriformes
             </a>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link active border-bottom">
+          <li class="nav-item" data-category="Galliformes">
+            <a href="./navigation.html?category=Galliformes" class="nav-link category-link">
                 Galliformes
             </a>
         </li>
@@ -76,10 +76,14 @@
     </section>
 
     
-    <section id="main" class="main-content">
-        <div class="item 3d">
-          <div class="bird x">
-            <img src="./images/details/bird1.jpg" alt="bird img" class="bird-image">
+    <section id="main" class="main-content" style="margin-left: 4.8rem; padding: 1rem;">
+    
+  
+      <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5">
+        <div class="card" style="width: 45%;">
+          <img src="" alt="Bird Image" class="img-fluid bird-image">
+          <div class="card-body"> 
+            <a href="./mapPage.html" class="btn btn-outline-warning">How to find</a>
             <button class="favorite-btn">
               <svg
                 class="heart-icon"
@@ -98,22 +102,55 @@
                 />
               </svg>
             </button>
-          </div>   
+          </div>
         </div>
-        <div class="item text-content">
-            <div class="li1 title">Scientific Name</div>
-            <div class="li2 title">bird 1</div>
-            <div class="li1 class">Vernacular Name</div>
-            <div class="li2 class">name</div>
-            <div class="li1 family">Family</div>
-            <div class="li2 family">name</div>
-            <div class="li1 genus">Genus</div>
-            <div class="li2 genus">name</div>
-            <div class="li1 habitat">Habitat</div>
-            <div class="li2 habitat">name</div>
+  
+        <div class="col">
+          
+          <h1 class="bird-name">Bird Name</h1>
+          <p class="bird-description">Bird description goes here.</p>
+          <div class="row row-cols-1 row-cols-sm-2 g-4 info">
+            
+            <div class="col d-flex flex-column gap-2 item-info">
+              
+                <div class="logo">
+                  <img src="./images/details/pencil-square.svg" alt="logo" height="50px">
+                </div>
+              
+                <h4>Basic Information</h4>
+                <ul class="basic-info"></ul>
+            </div>
+  
+            <div class="col d-flex flex-column gap-2 item-info">
+              <div class="logo">
+                <img src="./images/details/playstation.svg" alt="logo" height="50px">
+              </div>
+              <h4>Habitat</h4>
+              <ul class="habitat-info"></ul>
+            </div>
+  
+            <div class="col d-flex flex-column gap-2 item-info">
+              <div class="logo">
+                <img src="./images/details/folder2-open.svg" alt="logo" height="50px">
+              </div>
+              <h4>Ecological Habitat</h4>
+              <ul class="behavior-info"></ul>
+              </ul>
+            </div>
+  
+            <div class="col d-flex flex-column gap-2 item-info">
+              <div class="logo">
+                <img src="./images/details/emoji-laughing.svg" alt="logo" height="50px">
+              </div>
+              <h4>Fun Fact</h4>
+              <ul class="fun-facts-info"></ul>
+            </div>
+          </div>
         </div>
-        
-    </section>
+      </div>
+    
+
+  </section>
     
 </div>
       <script src="./js/details.js" charset="utf-8"></script>
