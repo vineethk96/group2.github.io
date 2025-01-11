@@ -32,31 +32,45 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Wait for User to Submit a Search
     form.addEventListener('submit', async (event) => {
-        event.preventDefault(); // Prevents default form submission. (COME BACK TO)
+        event.preventDefault();
         const query = input.value;
 
-        if(query){
+        if (query) {
+            // Request the query filtered to only birds
+            const speciesUrl = `https://species-ws.nbnatlas.org/search?q=&fq=commonName:${query}&fq=rk_class:Aves`;
 
-            const url = `https://species-ws.nbnatlas.org/search??q=&fq=commonName:${query}&fq=rk_class:Aves`
+            try {
+                const speciesResponse = await fetch(speciesUrl);
+                const speciesData = await speciesResponse.json();
 
-            try{
-                // Get the data from the NBN Atlas API
-                const searchResponse = await fetch(url);
-                const searchData = await searchResponse.json();
-
-                // Check if the autoComplete response is an array
-                if(searchData.searchResults.results && Array.isArray(searchData.searchResults.results)){
-                    console.log(searchData);
-                    populateTable(searchData.searchResults.results);
+                // Check if the call were successful, and are in an array format
+                if (speciesData.searchResults.results && Array.isArray(speciesData.searchResults.results)) {
+                    // Filter birds, and populate the table
+                    const birdsWithinRadius = await filterAndPopulateTable(speciesData.searchResults.results);
+                    // Populate the Table
+                    //populateTable(birdsWithinRadius);
+                } else {
+                    console.error('Error: Incomplete Array', speciesData);
                 }
-                else{
-                    console.error('Error: Incomplete Array', searchData);
-                }
-            }catch(error){
+            } catch (error) {
                 console.error('Error: Invalid Return Data', error);
             }
         }
     });
+
+    async function filterAndPopulateTable(query) {
+        // Gets all the birds within a given radius of London (Takes way too much time)
+        const allOccurrences = await fetchOccurrencesWithinRadius(LONDON_LAT, LONDON_LONG, RADIUS_KM);
+        
+        // Filter birds that match the search query
+        const filteredBirds = allOccurrences.filter(occurrence => occurrence.commonName.includes(query));
+    
+        // Remove duplicates by scientific name
+        const uniqueBirds = [...new Map(filteredBirds.map(bird => [bird.scientificName, bird])).values()];
+    
+        // Populates the table with the birds
+        populateTable(uniqueBirds);
+    }
 
     function populateTable(data){
         const dataTable = document.querySelector('#dataTable tbody');
@@ -68,7 +82,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Update the table data
         data.forEach((item, index) => {
 
-            
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${item.commonNameSingle}</td>
@@ -79,41 +92,44 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    function selectRow(sciName){
-        const rows = document.querySelectorAll('#dataTable tbody  tr');
+    function selectRow(sciName) {
+        const rows = document.querySelectorAll('#dataTable tbody tr');
         
-        // Deselects all rows
+        // Deselect all rows
         rows.forEach(row => row.classList.remove('selected'));
-
-        // Find the user selected row to "select"
+    
+        // Select the clicked row
         const selectedRow = Array.from(rows).find(row => row.cells[1].textContent === sciName);
-        if(selectedRow){
+        if (selectedRow) {
             selectedRow.classList.add('selected');
         }
-
-        // Get the long and lat values via the scientific name
-        getLatLongs(sciName);
+    
+        // Use the pre-fetched data to add markers
+        addMarkersForBird(sciName, allOccurrences);
     }
 
-    async function getLatLongs(sciName){
-        const url = `https://records-ws.nbnatlas.org/occurrences/search?q=class:${BIRD_CLASS}&lat=${LONDON_LAT}&lon=${LONDON_LONG}&radius=${RADIUS_KM}&fq=taxon_name:${sciName}`;
+    function addMarkersForBird(sciName, occurrences) {
+        const birdOccurrences = occurrences.filter(occurrence => occurrence.scientificName === sciName);
+    
+        // Clear all the Markers
+        deleteMarkers();
+    
+        // Add the new Markers
+        birdOccurrences.forEach(sighting => {
+            addMarker({ lat: sighting.decimalLatitude, lng: sighting.decimalLongitude });
+        });
+    }
 
-        try{
-            const res = await fetch(url);
-            const data = await res.json();
-            //console.log('data: ', data.occurrences);
-
-            // Clear all the Markers
-            deleteMarkers();
-
-            // Add the new Markers
-            data.occurrences.forEach(sighting => {
-                //console.log("sciName: %s | latLong: %f", sciName, sighting.latLong);
-                addMarker({lat: sighting.decimalLatitude, lng: sighting.decimalLongitude});
-            });
-
-        }catch(error){
-            console.error('Error: Could not get LatLong Data', error);
+    async function fetchOccurrencesWithinRadius(lat, lon, radius) {
+        const url = `https://records-ws.nbnatlas.org/occurrences/search?q=class:${BIRD_CLASS}&lat=${lat}&lon=${lon}&radius=${radius}`;
+    
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            return data.occurrences;
+        } catch (error) {
+            console.error('Error fetching occurrences within radius', error);
+            return [];
         }
     }
 
