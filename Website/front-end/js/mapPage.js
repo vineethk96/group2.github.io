@@ -15,6 +15,13 @@ const RADIUS_KM = 50;
 
 document.addEventListener('DOMContentLoaded', async () => {
 
+    const countBox = document.getElementById('sightingBox');
+    if (countBox) {
+        console.log('sightingBox exists at DOMContentLoaded.');
+    } else {
+        console.log('sightingBox does not exist at DOMContentLoaded.');
+    }
+
     // Connect to the API to get the GMaps API Key
     const keyResponse = await fetch('http://localhost:3000/api/key');
     const keyData = await keyResponse.json();
@@ -67,7 +74,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Update the table data
         data.forEach((item, index) => {
-
             
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -101,19 +107,39 @@ document.addEventListener('DOMContentLoaded', async () => {
         try{
             const res = await fetch(url);
             const data = await res.json();
-            //console.log('data: ', data.occurrences);
+            console.log('data: ', data.occurrences);
 
             // Clear all the Markers
             deleteMarkers();
 
-            // Add the new Markers
-            data.occurrences.forEach(sighting => {
-                //console.log("sciName: %s | latLong: %f", sciName, sighting.latLong);
-                addMarker({lat: sighting.decimalLatitude, lng: sighting.decimalLongitude});
-            });
+            if(data.occurrences.length == 0){
+                console.log("No occurances in London");
+            }
+            else{
+                console.log('%d sightings in London', data.occurrences.length);
+                // Add the new Markers
+                data.occurrences.forEach(sighting => {
+                    //console.log("sciName: %s | latLong: %f", sciName, sighting.latLong);
+                    addMarker({lat: sighting.decimalLatitude, lng: sighting.decimalLongitude});
+                });
+            }
+
+            // Display to the users how many of the bird has been seem
+            updateCountBox(`<h3>Bird Sightings</h3><p>There have been ${data.occurrences.length} sightings around London.</p>`);
 
         }catch(error){
             console.error('Error: Could not get LatLong Data', error);
+        }
+    }
+
+    // Function to update the count box
+    function updateCountBox(content) {
+        const countBox = document.getElementById('sightingBox');
+        if (countBox) {
+            console.log('sightingBox found:', countBox);
+            countBox.innerHTML = content;
+        } else {
+            console.error('Error: sightingBox element not found.');
         }
     }
 
@@ -142,7 +168,7 @@ function initMap(){
     // Sets the Map Defaults
     var mapOptions = {
         center: new google.maps.LatLng(51.514756, -0.104345),
-        zoom: 14,
+        zoom: 10,
         styles: themedMap
     };
 
