@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if(query){
 
-            const url = `https://species-ws.nbnatlas.org/search?q=&fq=commonName:${query}'`
+            const url = `https://species-ws.nbnatlas.org/search??q=&fq=commonName:${query}&fq=rk_class:Aves`
 
             try{
                 // Get the data from the NBN Atlas API
@@ -67,6 +67,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Update the table data
         data.forEach((item, index) => {
+
+            
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${item.commonNameSingle}</td>
