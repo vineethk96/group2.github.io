@@ -65,7 +65,33 @@
         <!-- Info and Map Area -->
         <section id="mapArea" class="workspace">
             <div id='fullScreen'>
-                <div id='infoPanel'></div>
+                <div id='sightingBox' class="translucent-box">
+                    <h3>Bird Sightings</h3>
+                    <!-- Bird Sighting Count content goes here -->
+                </div>
+                <div id='infoPanel'>
+                    <!-- Search Bar -->
+                    <div id='searchBar'>
+                        <form id="searchForm">
+                            <input type="text" id="searchInput" placeholder="Enter your search query" required>
+                            <button type="submit" id="searchButton">Search</button>
+                        </form>
+                    </div>
+
+                    <!-- Dynamically Loading Table -->
+                    <table id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>Common Name</th>
+                                <th>Scientific Name</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tableBody">
+                            <!-- Rows are Populated here -->
+                        </tbody>
+                    </table>
+                </div>
                 <div id='mapCanvas'></div>
             </div>
         </section>
