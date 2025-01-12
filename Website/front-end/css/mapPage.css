@@ -68,8 +68,8 @@ tr.selected{
 
 .translucent-box {
     position: absolute;
-    top: 10%;
-    right: 2%;
+    top: 12%;
+    right: 5%;
     width: 300px;
     height: 150px;
     background-color: rgba(255, 255, 255, 0.8); /* White with 80% opacity */
