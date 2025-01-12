@@ -583,3 +583,77 @@ var themedMap = [
     ]
   }
 ];
+
+// Add animation function
+function addBounceAnimation(polygon) {
+    let scale = 0;
+    const duration = 50; 
+    const startTime = Date.now();
+    const originalPoints = polygon.getPath().getArray(); 
+
+    function animate() {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        scale = bounceOut(progress);
+        
+        const center = getPolygonCenter(originalPoints);  // Use the raw point computing center
+        
+        const scaledPoints = originalPoints.map(point => {
+            const lat = center.lat() + (point.lat() - center.lat()) * (0.5 + scale * 0.5);
+            const lng = center.lng() + (point.lng() - center.lng()) * (0.5 + scale * 0.5);
+            return new google.maps.LatLng(lat, lng);
+        });
+
+        polygon.setOptions({
+            paths: scaledPoints,
+            fillOpacity: scale * 0.35
+        });
+
+        if (progress < 1) {
+            requestAnimationFrame(animate);
+        } else {
+            // Return to the original state after the animation
+            polygon.setOptions({
+                paths: originalPoints,  // Restore original coordinates
+                fillOpacity: 0.35,
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                visible: true,
+                map: map
+            });
+        }
+    }
+
+    function bounceOut(t) {
+        const n1 = 7.5625;
+        const d1 = 2.75;
+
+        if (t < 1 / d1) {
+            return n1 * t * t;
+        } else if (t < 2 / d1) {
+            return n1 * (t -= 1.5 / d1) * t + 0.75;
+        } else if (t < 2.5 / d1) {
+            return n1 * (t -= 2.25 / d1) * t + 0.9375;
+        } else {
+            return n1 * (t -= 2.625 / d1) * t + 0.984375;
+        }
+    }
+
+    function getPolygonCenter(points) {
+        let bounds = new google.maps.LatLngBounds();
+        points.forEach(point => bounds.extend(point));
+        return bounds.getCenter();
+    }
+
+    // Save the original state before starting the animation
+    polygon.setOptions({
+        visible: true,
+        map: map
+    });
+
+    animate();
+}
+
+// Derived animation function
+window.addBounceAnimation = addBounceAnimation;
