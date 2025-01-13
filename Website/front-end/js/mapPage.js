@@ -12,7 +12,7 @@ let greenSpaceLayer = [];
 const BIRD_CLASS = 'Aves';
 const LONDON_LAT = 51.5074;
 const LONDON_LONG = -0.1278;
-const RADIUS_KM = 50;
+const RADIUS_KM = 25;
 
 document.addEventListener('DOMContentLoaded', async () => {
 
