@@ -99,40 +99,5 @@
         <script type='text/javascript' src='https://code.jquery.com/jquery-3.7.1.js'></script>
         <script type='text/javascript' src='./js/mapStyle.js'></script>
         <script type='text/javascript' src='./js/mapPage.js'></script>
-        <script>
-            // load Google Maps API
-            async function loadGoogleMapsAPI() {
-                try {
-                    const response = await fetch('http://localhost:3000/api/key');
-                    const data = await response.json();
-                    if (!data.apiKey) {
-                        throw new Error('API key not found');
-                    }
-                    
-                    const script = document.createElement('script');
-                    script.src = `https://maps.googleapis.com/maps/api/js?key=${data.apiKey}&callback=initMap`;
-                    script.async = true;
-                    script.defer = true;
-                    document.head.appendChild(script);
-                } catch (error) {
-                    console.error('Error loading Google Maps API:', error);
-                    document.getElementById('mapCanvas').innerHTML = 
-                        '<div style="text-align: center; padding: 20px;">' +
-                        '<h3>Map Loading Failed</h3>' +
-                        '<p>Please check API key configuration</p>' +
-                        '</div>';
-                }
-            }
-
-            
-            document.addEventListener('DOMContentLoaded', loadGoogleMapsAPI);
-        </script>
-
-        <div id="mapControls" class="translucent-box" style="top: 20%;">
-            <label>
-                <input type="checkbox" checked onclick="toggleGreenSpaces(this.checked)">
-                Show Green Spaces
-            </label>
-        </div>
     </body>
 </html>
