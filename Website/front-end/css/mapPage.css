@@ -20,7 +20,7 @@
     /* justify-content: center; */
     height: 100%;
     width: 25%;
-    background-color: rgba(0, 0, 0, 0.267);
+    background-color: bisque;
     overflow-y: auto;
 }
 
@@ -36,7 +36,6 @@
 #searchButton{
     border-radius: 10px;
     border: 1px solid #ccc;
-    background-color: bisque;
 }
 
 #searchInput{
@@ -59,11 +58,11 @@ th, td{
 }
 
 tr:nth-child(even){
-    background-color: #f2f2f2;
+    background-color: #ff7f4c;
 }
 
 tr.selected{
-    background-color: #f0f0f0;
+    background-color: #edef72;
 }
 
 .translucent-box {
