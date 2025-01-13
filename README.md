@@ -1,28 +1,30 @@
-# CASA0017 Web Assessment ReadMe File
+# CASA0017 Birds World
 
-# DELETE THE LAST LINE AND REPLACE THIS LINE WITH YOUR WEBSITE NAME 
+## Summary
 
-This is the Final assessment template for CASA0017 - Please use this template and edit the relevant sections to personalise.
-This section has a short introduction to what the website is about and what research problem the site is solving.  Remeber this file showcases your website source code so use it to sell what you can do as a group or showcase in a future portfolio. 
+For the final assessment of CASA0017, Group 2 made a website called Birds World.
+Birds World was developed to help everyday people understand more about the birds that inhabit various areas of London.
 
-## Use this README File 
+## Installation and Setup
 
-Use this section to show us what your Website is about.   Include a Screenshot to the Website in this README file, link to the various frameworks you've used.  If you want to show off your website you can add a Gif of you interacting with your site.   Emojis are also fun to include as well 😄
+### Requirements:
 
-Look at some other Websites online in GitHub and see how they use the README File to showcase thier site.  Good examples are:
+1. VS Code
+2. [Live Server Extension](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
+3. [Google Maps API Key](https://developers.google.com/maps/documentation/embed/get-api-key)
 
-- https://github.com/smaranjitghose/awesome-portfolio-websites
-- https://github.com/gohugoio/hugo    
-- https://github.com/academicpages/academicpages.github.io
+Once users pull this repo, do the following to run the application:
 
-##  Replace the Tags on the side menu of GitHub
+1. Head over to the [Google Maps API page](https://developers.google.com/maps/documentation/embed/get-api-key). Follow these steps to create an API key.
+2. Using terminal, navigate to the `Website/back-end` directory, and create an `.env` file. Here we will add the GMaps API Key in the following format:
+   ```
+   GMAP_API_KEY_S=<Insert API Key Here>
+   ```
+3. Once the .env file has been created, begin the server by running `npm start` from within the `Website/back-end` directory.
+4. Install VS Code if you haven't yet, as well as the Live Server Extension.
+5. In the bottom right corner, you will see a little button that says `Live Server`, click on that to begin the front-end.
+6. Once all that is done, click [here](http://127.0.0.1:5500/Website/front-end/) to launch the front page.
 
-Put some tags in to make your site more searchable in GitHub
+## Contact Details
 
-## Include A Section That Tells Developers How To Install The App
-
-Include a section that gives intructions on how to install the app or run it in Docker.  What versions of the plugins are you assuming?  Maybe define a licence as well, this is good practise.
-
-##  Contact Details
-
-Having Contact Details is also good as it shows people how to get in contact with you if they'd like to contribute to the app. 
+[Website Link](http://127.0.0.1:5500/Website/front-end/)

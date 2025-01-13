@@ -15,10 +15,8 @@
         <!-- Top Nav Bar -->
         <section id="title" class="background-img">
             <nav class="navbar navbar-expand-lg bg-body-tertiary background-img">
-                <div class="container">
-                    <a class="navbar-brand" href="#">
-                        <img src="./images/home/feather.svg" alt="brand icon" height="50px"> Birds' World
-                    </a>
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="./index.html"><img src="./images/house-door.svg" alt="brand icon" height="50px"></a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -26,30 +24,23 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-5">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="./homepage.html">HOME</a>
+                                <a class="nav-link" aria-current="page" href="./index.html">HOME</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="./navigation.html">NAVIGATION</a>
-                            </li>
+
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    MAP
+                                <a class="nav-link dropdown-toggle" href="./navigation.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    NAVIGATION
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" href="./mapPage.html">Overview</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">Explore</a>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">Something else here</a>
-                                    </li>
+                                    <li><a class="dropdown-item" href="./navigation.html">Navigation</a></li>
+                                    <li><a class="dropdown-item" href="./details.html?birdId=bird5">Example Details</a></li>
                                 </ul>
                             </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link active" href="./mapPage.html">MAP</a>
+                            </li>
+                            
                             <li class="nav-item">
                                 <a class="nav-link" href="./favorite.html">FAVORITE</a>
                             </li>
@@ -99,41 +90,7 @@
         <!-- Bottom Contact Us Bar -->
         <section id="contact" class="bottom">
             <div class="container">
-                <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 pt-5 pb-2 mt-5 mb-2 border-top">
-                    <div class="col mb-3">
-                        <a href="/" class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none">
-                            <img src="./images/home/feather.svg" alt="brand icon" height="50px">
-                        </a>
-                        <p class="text-body-secondary">© 2024-2025 casa-ce</p>
-                    </div>
-
-                    <div class="col mb-3"></div>
-
-                    <div class="col mb-3">
-                        <ul class="nav flex-column">
-                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
-                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Navigation</a></li>
-                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Favorite</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="col mb-3">
-                        <ul class="nav flex-column">
-                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Map-overview</a></li>
-                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Map-explore</a></li>
-                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="col mb-3">
-                        <h5>Sources</h5>
-                        <ul class="nav flex-column">
-                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Github</a></li>
-                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Data</a></li>
-                        </ul>
-                    </div>
-
-                </footer>
+               
             </div>
         </section>
 
@@ -142,5 +99,40 @@
         <script type='text/javascript' src='https://code.jquery.com/jquery-3.7.1.js'></script>
         <script type='text/javascript' src='./js/mapStyle.js'></script>
         <script type='text/javascript' src='./js/mapPage.js'></script>
+        <script>
+            // load Google Maps API
+            async function loadGoogleMapsAPI() {
+                try {
+                    const response = await fetch('http://localhost:3000/api/key');
+                    const data = await response.json();
+                    if (!data.apiKey) {
+                        throw new Error('API key not found');
+                    }
+                    
+                    const script = document.createElement('script');
+                    script.src = `https://maps.googleapis.com/maps/api/js?key=${data.apiKey}&callback=initMap`;
+                    script.async = true;
+                    script.defer = true;
+                    document.head.appendChild(script);
+                } catch (error) {
+                    console.error('Error loading Google Maps API:', error);
+                    document.getElementById('mapCanvas').innerHTML = 
+                        '<div style="text-align: center; padding: 20px;">' +
+                        '<h3>Map Loading Failed</h3>' +
+                        '<p>Please check API key configuration</p>' +
+                        '</div>';
+                }
+            }
+
+            
+            document.addEventListener('DOMContentLoaded', loadGoogleMapsAPI);
+        </script>
+
+        <div id="mapControls" class="translucent-box" style="top: 20%;">
+            <label>
+                <input type="checkbox" checked onclick="toggleGreenSpaces(this.checked)">
+                Show Green Spaces
+            </label>
+        </div>
     </body>
 </html>

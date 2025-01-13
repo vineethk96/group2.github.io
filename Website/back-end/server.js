@@ -60,10 +60,15 @@ csvFiles.forEach(file => {
 
 /**
  * Description: Access the API Key
- * TODO: Swap out Steven's API key for my own
  */
-app.get('/api/key', (req, res)=>{
-  res.json({apiKey: process.env.GMAP_API_KEY_S});
+app.get('/api/key', (req, res) => {
+    const apiKey = process.env.GMAP_API_KEY;
+    if (!apiKey) {
+        console.error('Google Maps API key not found in environment variables');
+        res.status(500).json({ error: 'API key not configured' });
+        return;
+    }
+    res.json({ apiKey });
 });
 
 app.listen(port, '0.0.0.0', () => {
