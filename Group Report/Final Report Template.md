@@ -24,7 +24,9 @@ This project has achieved remarkable results in visualizing bird distribution in
 
 ## Biblography
 1.London Datastore (2021). GiGL Spaces to Visit – London Datastore. [online] London.gov.uk. Available at: https://data.london.gov.uk/dataset/spaces-to-visit#: [Accessed 3 Jan. 2025].
+
 2.NBN Atlas (2023). NBN Atlas - UK’s largest collection of biodiversity information. [online] NBN Atlas. Available at: https://nbnatlas.org/ [Accessed 28 Dec. 2024].
+
 3.Sidebar (n.d.). Sidebars · Bootstrap v5.3. [online] getbootstrap.com. Available at: https://getbootstrap.com/docs/5.3/examples/sidebars/.
 
 
