@@ -2,15 +2,17 @@
 
 ---
 title: "CASA0017: Web Architecture Final Assessment"
-author: "Steven Gray, Valerio Signorelli, Duncan Wilson, Sarah Wise"
-date: "10 Dec 2020"
+author: "Vineeth Kirandumkara, Quqing Dai, Xia Jinming, Xinming Feng"
+date: "13 Jan 2025"
 ---
 
 -->
 
 # CASA0017
 
-Birds World
+[Birds World](https://github.com/vineethk96/group2.github.io)
+
+To Open the website, follow github readme instructions, and go [here](http://127.0.0.1:5500/Website/front-end/)
 
 ## Abstract
 
@@ -213,6 +215,10 @@ To be able to connect between data storage and users' job operations effortlessl
 In addition to that, by employing the data binding functional capability of JavaScript, the map which is part of this page is linked together with the webpage content, and it is ensured that the distribution data update is made available in real time. Besides this, the design guarantees instant availability of data that in turn fires the users' curiosity on the exploration.
 
 The part of the project that is responsible for collecting and visualizing the data is the core one. The inclusion of the ornithological databases and the geographic information services allow accurate bird distribution information presentation. Through map annotation, data analysis and the card layout creation, we offer users a cutting-edge tool that is genial, intuitive and supports numerous undertakings at once. This visualization, besides its appreciation of fundamental users, is also a building block for further data examination and opens a door for looking at the yet unappraised aspects of avian ecosystems.
+
+## Reflection
+
+If given more time for this project, there are several areas for improvement. For one, the static details pages should be written to talk to APIs such as NBN atlas, to dynamically load information about birds. Within the maps page, improvements such as limiting the amount of birds in a given search radius if no sightings have been made, and adding further filters such as genus, and phylum would be ideal. Even incorporating the users current location, and mapping them to the bird sighting location could be added.
 
 ## Conclusion
 
