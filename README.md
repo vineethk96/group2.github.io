@@ -18,7 +18,7 @@ Once users pull this repo, do the following to run the application:
 1. Head over to the [Google Maps API page](https://developers.google.com/maps/documentation/embed/get-api-key). Follow these steps to create an API key.
 2. Using terminal, navigate to the `Website/back-end` directory, and create an `.env` file. Here we will add the GMaps API Key in the following format:
    ```
-   GMAP_API_KEY_S=<Insert API Key Here>
+   GMAP_API_KEY=<Insert API Key Here>
    ```
 3. Once the .env file has been created, begin the server by running `npm start` from within the `Website/back-end` directory.
 4. Install VS Code if you haven't yet, as well as the Live Server Extension.
